@@ -1,0 +1,28 @@
+{
+  "name": "sqc-project-hipsterpenguin",
+  "version": "1.0.0",
+  "description": "Your name or CVTC username",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it-sd/sqc-project-HipsterPenguin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/it-sd/sqc-project-HipsterPenguin/issues"
+  },
+  "homepage": "https://github.com/it-sd/sqc-project-HipsterPenguin#readme",
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
