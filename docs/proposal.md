@@ -7,7 +7,8 @@ that may be added in the future include recipe steps included in the generation 
 based on food types or calorie/macro nutrients requirements. The user may also have access to an account
 system in the future for saving recipes/prefferences to save time. The core features of this website
 are mainly going to be about retrieving recipes that match a given set of requirements and returning a 
-list of recipes that match that requirement. 
+list of recipes that match that requirement. The website will also include a blog like page for
+my own personal recipes and ideas.
 
 Web services
 ------------
@@ -33,3 +34,5 @@ table with accompanying menu table and a steps table to store the steps of the r
 
 Initial Designs
 ----------------
+![Site Layout](./docs/FoodFinder-Site-Layout.png)
+![Site Map](./docs/FoodFinder-Site-Map.png)
