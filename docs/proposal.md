@@ -34,5 +34,5 @@ table with accompanying menu table and a steps table to store the steps of the r
 
 Initial Designs
 ----------------
-![Site Layout](./docs/FoodFinder-Site-Layout.png)
-![Site Map](./docs/FoodFinder-Site-Map.png)
+![Site Layout](./FoodFinder-Site-Layout.png)
+![Site Map](./FoodFinder-Site-Map.png)
