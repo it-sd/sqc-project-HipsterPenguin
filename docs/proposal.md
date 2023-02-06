@@ -9,7 +9,7 @@ system in the future for saving recipes/prefferences to save time. The core feat
 are mainly going to be about retrieving recipes that match a given set of requirements and returning a 
 list of recipes that match that requirement. 
 
-Web service
+Web services
 ------------
 - [The Meal DB](https://www.themealdb.com/api.php) Authentication Type: API Key
 - [Zestful Data](https://zestfuldata.com/docs) Authentication Type: API Key
