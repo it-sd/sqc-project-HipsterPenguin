@@ -11,9 +11,9 @@ list of recipes that match that requirement.
 
 Web service
 ------------
-[The Meal DB](https://www.themealdb.com/api.php) Authentication Type: API Key
-[Zestful Data](https://zestfuldata.com/docs) Authentication Type: API Key
-[Spoonacular](https://spoonacular.com/food-api/docs) Authenication Type: API Key
+- [The Meal DB](https://www.themealdb.com/api.php) Authentication Type: API Key
+- [Zestful Data](https://zestfuldata.com/docs) Authentication Type: API Key
+- [Spoonacular](https://spoonacular.com/food-api/docs) Authenication Type: API Key
 
 ### End Points
 - www.themealdb.com/api/json/v1/1/search.php HTTP GET
