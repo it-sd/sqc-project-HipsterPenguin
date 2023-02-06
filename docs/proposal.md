@@ -16,10 +16,10 @@ Web service
 [Spoonacular](https://spoonacular.com/food-api/docs) Authenication Type: API Key
 
 ### End Points
--www.themealdb.com/api/json/v1/1/search.php HTTP GET
--www.themealdb.com/api/json/v1/1/categories.php HTTP GET
--https://api.spoonacular.com/recipes/findByIngredients HTTP GET
--https://zestfuldata.com/parseIngredients HTTP GET
+- www.themealdb.com/api/json/v1/1/search.php HTTP GET
+- www.themealdb.com/api/json/v1/1/categories.php HTTP GET
+- https://api.spoonacular.com/recipes/findByIngredients HTTP GET
+- https://zestfuldata.com/parseIngredients HTTP GET
 
 Database
 ---------
