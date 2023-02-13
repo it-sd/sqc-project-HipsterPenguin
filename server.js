@@ -12,8 +12,7 @@ express()
         res.render('pages/index')
     })
     .get('/health', function (req, res) {
-        res.send('Healthy')
-        res.sendStatus(200)
+        res.status(200).send('Healthy')
     })
     .get('/about', function (req, res) {
         res.render('pages/about')
