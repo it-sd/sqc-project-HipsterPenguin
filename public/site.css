@@ -15,8 +15,8 @@ nav {
     background-color: #08F;
     border-radius: 5px;
     border: 2px solid darkorange;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -39,7 +39,7 @@ p {
 .navButton {
     background-color: orange;
     border: none;
-    color: white;
+    color: #08F;
     padding: 10px 32px;
     text-align: center;
     display: inline-block;
@@ -51,7 +51,6 @@ p {
 }
 
 .navButton > a {
-    color: white;
     text-decoration: none;
 }
 
