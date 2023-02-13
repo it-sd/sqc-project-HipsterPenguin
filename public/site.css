@@ -79,6 +79,7 @@ p {
     height: 80px;
     margin-left: 0;
     margin-right: 10px;
+    margin-bottom: 10px;
     display: inline-flex;
     align-items: center;
     background-color: orange;
@@ -89,3 +90,10 @@ p {
 #SiteLogoIcon {
     margin-left: 10px;
 }
+
+@media screen and (max-width: 900px) {
+    #MainHeader {
+        flex-direction: column;
+    }
+}
+    
