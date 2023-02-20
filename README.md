@@ -9,7 +9,7 @@ based on food types or calorie/macro nutrients requirements.The core features of
 are mainly going to be about retrieving recipes that match a given set of requirements and returning a 
 list of recipes that match that requirement. 
 
-Site: ![FoodFinder](https://food-finder-emua.onrender.com/)
+Site: [FoodFinder](https://food-finder-emua.onrender.com/)
 
 Database ER Diagram
 --------------------
