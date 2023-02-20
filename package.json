@@ -4,8 +4,9 @@
   "description": "Your name or CVTC username",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint \"**/*.js\""
+    "test": "jasmine",
+    "lint": "px eslint \"**/*.js\"",
+    "coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",
