@@ -34,7 +34,7 @@ const query = async function (sql, params) {
   }
 
 const healthQuery = async function () {
-    const result = await query('SELECT * FROM Recipe', [])
+    const result = await query('SELECT * FROM Recipe LIMIT 1;', [])
 
     let status = 200
     let msg = 'healthy'
@@ -48,7 +48,7 @@ const healthQuery = async function () {
 }
 
 const getRecipesQuery = async function () {
-    const result = await query('SELECT * FROM Recipe', [])
+    const result = await query('SELECT * FROM Recipe;', [])
     
     let status = 200
     let msg = 'healthy'
@@ -85,5 +85,9 @@ express()
     })
     .get('/contact', function (req, res) {
         res.render('pages/contact')
+    })
+    .get('/finder', async function (req, res) {
+        recipes = await getRecipesQuery()
+        res.render('pages/finder', { recipes })
     })
     .listen(PORT, () => console.log(`Listening on ${PORT}`))

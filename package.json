@@ -2,10 +2,10 @@
   "name": "sqc-project-hipsterpenguin",
   "version": "1.0.0",
   "description": "Your name or CVTC username",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jasmine",
-    "lint": "px eslint \"**/*.js\"",
+    "lint": "npx eslint \"**/*.js\"",
     "coverage": "nyc npm test"
   },
   "repository": {
