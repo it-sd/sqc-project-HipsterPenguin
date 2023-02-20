@@ -17,4 +17,7 @@ express()
     .get('/about', function (req, res) {
         res.render('pages/about')
     })
+    .get('/contact', function (req, res) {
+        res.render('pages/contact')
+    })
     .listen(PORT, () => console.log(`Listening on ${PORT}`))
