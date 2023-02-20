@@ -1,7 +1,11 @@
+require('dotenv').config()
+
 const express = require('express')
 const path = require('path')
-const PORT = process.env.PORT || 5163
+const assert = require('assert')
 const { Pool } = require('pg')
+
+const PORT = process.env.PORT || 5163
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

@@ -1,4 +1,4 @@
-const { query, healthQuery } = require('../server.js')
+const { query, healthQuery, getRecipesQuery } = require('../server.js')
 
 describe('healthQuery', function () {
     it ('should return a status between 200 & 399', async function () {
