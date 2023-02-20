@@ -9,3 +9,4 @@ based on food types or calorie/macro nutrients requirements.The core features of
 are mainly going to be about retrieving recipes that match a given set of requirements and returning a 
 list of recipes that match that requirement. 
 
+akornmann can handle rejection
