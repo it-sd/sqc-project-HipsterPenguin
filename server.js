@@ -15,79 +15,79 @@ const pool = new Pool({
 })
 
 const query = async function (sql, params) {
-    assert.strictEqual(typeof sql, 'string',
-      'Expected src to be a string')
-  
-    let client
-    let results = []
-    try {
-      client = await pool.connect()
-      const response = await client.query(sql, params)
-      if (response && response.rows) {
-        results = response.rows
-      }
-    } catch (err) {
-      console.error(err)
+  assert.strictEqual(typeof sql, 'string',
+    'Expected src to be a string')
+
+  let client
+  let results = []
+  try {
+    client = await pool.connect()
+    const response = await client.query(sql, params)
+    if (response && response.rows) {
+      results = response.rows
     }
-    if (client) client.release()
-    return results
+  } catch (err) {
+    console.error(err)
   }
+  if (client) client.release()
+  return results
+}
 
 const healthQuery = async function () {
-    const result = await query('SELECT * FROM Recipe LIMIT 1;', [])
+  const result = await query('SELECT * FROM Recipe LIMIT 1;', [])
 
-    let status = 200
-    let msg = 'healthy'
+  let status = 200
+  let msg = 'healthy'
 
-    if (result=== undefined || result.length === 0) {
-        status = 500
-        msg = 'unhealthy'
-    }
+  if (result === undefined || result.length === 0) {
+    status = 500
+    msg = 'unhealthy'
+  }
 
-    return { status, msg }
+  return { status, msg }
 }
 
 const getRecipesQuery = async function () {
-    const result = await query('SELECT * FROM Recipe;', [])
-    
-    let status = 200
-    let msg = 'healthy'
+  const result = await query('SELECT * FROM Recipe;', [])
 
-    if (result=== undefined || result.length === 0) {
-        status = 500
-        msg = 'unhealthy'
-    }
+  let status = 200
+  let msg = 'healthy'
 
-    return { status, msg, result }
+  if (result === undefined || result.length === 0) {
+    status = 500
+    msg = 'unhealthy'
+  }
+
+  return { status, msg, result }
 }
 
 module.exports = {
-    query,
-    healthQuery,
-    getRecipesQuery
+  query,
+  healthQuery,
+  getRecipesQuery
 }
 
 express()
-    .use(express.static(path.join(__dirname, 'public/')))
-    .use(express.json())
-    .use(express.urlencoded({ extended: true }))
-    .set('views', path.join(__dirname, 'views'))
-    .set('view engine', 'ejs')
-    .get('/', function (req, res) {
-        res.render('pages/index')
-    })
-    .get('/health', async function (req, res) {
-        result = await healthQuery()
-        res.status(result.status).send(result.msg)
-    })
-    .get('/about', function (req, res) {
-        res.render('pages/about')
-    })
-    .get('/contact', function (req, res) {
-        res.render('pages/contact')
-    })
-    .get('/finder', async function (req, res) {
-        results = await getRecipesQuery()
-        res.render('pages/finder', { recipes: results.result })
-    })
-    .listen(PORT, () => console.log(`Listening on ${PORT}`))
+  .use(express.static(path.join(__dirname, 'public/')))
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', function (req, res) {
+    res.render('pages/index')
+  })
+  .get('/health', async function (req, res) {
+    const result = await healthQuery()
+    res.status(result.status).send(result.msg)
+  })
+  .get('/about', function (req, res) {
+    res.render('pages/about')
+  })
+  .get('/contact', function (req, res) {
+    res.render('pages/contact')
+  })
+  .get('/finder', async function (req, res) {
+    const results = await getRecipesQuery()
+    res.render('pages/finder', { recipes: results.result })
+  })
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
