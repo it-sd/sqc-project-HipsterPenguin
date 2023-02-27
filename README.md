@@ -14,3 +14,5 @@ Site: [FoodFinder](https://food-finder-emua.onrender.com/)
 Database ER Diagram
 --------------------
 ![ER Diagram](/docs/Food-Finder-ER-Diagram.png)
+ 4. Hello from dsprinkle2
+ 4. dsprinkle2 can handle rejection 
