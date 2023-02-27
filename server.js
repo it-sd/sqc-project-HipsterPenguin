@@ -90,4 +90,9 @@ express()
     const results = await getRecipesQuery()
     res.render('pages/finder', { recipes: results.result })
   })
+  .get('/addRecipe', function (req, res) {
+    res.render('pages/addRecipe')
+  })
+  .post('/recipe', async function (req, res) {
+  })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
