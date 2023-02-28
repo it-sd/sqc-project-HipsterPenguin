@@ -1,13 +1,118 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Home</title>
-    <%- include('../shared/head_includes.ejs') %>
-</head>
-<%- include('../shared/header.ejs') %>
-<body>
-<main>
+    <head>
+        <title>Add Recipe</title>
+        <%- include('../shared/head_includes.ejs') %>
+    </head>
+    <%- include('../shared/header.ejs') %>
+    <body>
+        <main>
+            <h2>Add Recipe</h2>
+            <form id="NewRecipeForm">
+                <fieldset form="NewRecipeForm" name="Basic Info">
+                    <label for="recipeNameInput">Recipe Name: </label>
+                    <input type="text" name="recipeNameInput"> <br>
+                    <label for="recipeCalsPerServingInput">Calories per Serving: </label>
+                    <input type="number" name="recipeCalsPerServingInput"> <br>
+                    <label form="recipeCostPerServingInput">Cost per Serving: </label>
+                    <input type="number" name="recipeCostPerServingInput"> <br>
+                </fieldset>
+                <br>
+                <fieldset id="IngredientFieldSet" >
+                    <fieldset id="IngredientInputFieldSet">
+                        <label for="ingredientNameInput">Ingredient Name: </label>
+                        <input type="text" name="ingredientNameInput"> <br>
+                        <label for="ingredientAmountInput">Ingredient Amount: </label>
+                        <input type="number" name="ingredientAmountInput"> <br>
+                        <label for="ingredientUnitInput">Ingredient Unit: </label>
+                        <input type="text" name="ingredientUnitInput"> <br>
+                    </fieldset>
+                </fieldset>
+                <button id="NewIngredientInputButton">Add Ingredient</button>
+                <br>
+                <fieldset id="StepFieldSet" >
+                    <fieldset id="StepTextInputFieldset">
+                        <label for="StepTextInput">Step Text: </label>
+                        <textarea name="StepTextInput"></textarea> <br>
+                    </fieldset>
+                </fieldset>
+                <button id="NewStepInputButton">Add Step</button>
+                <br>
+                <input id="RecipeSubmitButton" type="submit">
+            </form>
+        </main>
+    </body>
+    <script>
+        const IngredientInputFieldSet = document.getElementById("IngredientInputFieldSet");
+        const StepTextInputFieldset = document.getElementById("StepTextInputFieldset");
 
-</main>
-</body>
+        //Add ingredient input fields to the form
+        const addIngredientInput = function(event) {
+            event.preventDefault();
+            const newIngredientInput = IngredientInputFieldSet.cloneNode(true);
+            for (let i = 0; i < newIngredientInput.children.length; i++) {
+                newIngredientInput.children[i].value = "";
+            }
+            document.getElementById("IngredientFieldSet").appendChild(newIngredientInput);
+        }
+
+        const addStepInput = function (event) {
+            event.preventDefault();
+            const newStepInput = StepTextInputFieldset.cloneNode(true);
+
+            for (let i = 0; i < newStepInput.children.length; i++) {
+                newStepInput.children[i].value = "";
+            }
+            document.getElementById("StepFieldSet").appendChild(newStepInput);
+        }
+
+        const submitRecipe = function(event) {
+            event.preventDefault();
+            const recipeName = document.getElementsByName("recipeNameInput")[0].value;
+            const recipeCalsPerServing = document.getElementsByName("recipeCalsPerServingInput")[0].value;
+            const recipeCostPerServing = document.getElementsByName("recipeCostPerServingInput")[0].value;
+            const ingredientNameInputs = document.getElementsByName("ingredientNameInput");
+            const ingredientAmountInputs = document.getElementsByName("ingredientAmountInput");
+            const ingredientUnitInputs = document.getElementsByName("ingredientUnitInput");
+            const stepTextInputs = document.getElementsByName("StepTextInput");
+            const ingredients = [];
+            const steps = [];
+            for (let i = 0; i < ingredientNameInputs.length; i++) {
+                ingredients.push({
+                    name: ingredientNameInputs[i].value,
+                    amount: ingredientAmountInputs[i].value,
+                    unit: ingredientUnitInputs[i].value
+                });
+            }
+            for (let i = 0; i < stepTextInputs.length; i++) {
+                steps.push( (i+1).toString() + ". " + stepTextInputs[i].value);
+            }
+            const recipe = {
+                name: recipeName,
+                calsPerServing: recipeCalsPerServing,
+                costPerServing: recipeCostPerServing,
+                ingredients: ingredients,
+                steps: steps
+            }
+            console.log(recipe);
+            const res = fetch("/newRecipe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(recipe)
+            })
+
+            if (res.ok) {
+              document.getElementById("NewRecipeForm").innerHTML = "Recipe Added";
+            } else {
+                console.log("Recipe not added");
+            }
+        }
+
+        document.getElementById("NewIngredientInputButton").addEventListener("click", addIngredientInput);
+        document.getElementById("NewStepInputButton").addEventListener("click", addStepInput);
+        document.getElementById("RecipeSubmitButton").addEventListener("click", submitRecipe);
+
+    </script>
 </html>

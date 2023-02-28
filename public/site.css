@@ -102,9 +102,15 @@ table, th, td {
     justify-content: center;
 }
 
+#NewRecipeForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media screen and (max-width: 900px) {
     #MainHeader {
         flex-direction: column;
     }
 }
-    
+
