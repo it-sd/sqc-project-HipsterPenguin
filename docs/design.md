@@ -22,3 +22,21 @@ but will hide it when unnecessary to avoid slowing down the user.
 
 A good example of the end result will be something like this:
 ![Pop-up Example](./pop-up-example.jpg)
+
+
+Color Scheme & Typography
+-------------
+The color scheme/palette that I have decided to go with is a group of analogous colors with
+a base color of Dark Orange (#FF8C00). The reason that I have chose this set of colors is mainly
+to get a good amount of variety while keeping the theme cohesive and focused. I can take advantage
+of the variety of contrasting colors to highlight important information and to make the site more 
+visually appealing.
+
+![Color Palette](./color_palette.png)
+
+The font family I have chosen will be Helvetica Neue. I chose this typeface because it's simple yet 
+timeless and elegant and will be easy to read on any device. Another benefit is that this typeface is widely 
+used and will be familiar to most users. Some typography techniques I will try to stick to are quite
+simple. I will try to use a consistent font size and weight throughout the site to make it more
+readable and to make it easier to navigate. This will mean using a consistent size between headers, navigation,
+and controls in order to make information, as well as its purpose, immediately recognizable.
