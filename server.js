@@ -61,10 +61,16 @@ const getRecipesQuery = async function () {
   return { status, msg, result }
 }
 
+const queryMealDBByName = async function (name) {
+  const result = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=' + name)
+  return result
+}
+
 module.exports = {
   query,
   healthQuery,
-  getRecipesQuery
+  getRecipesQuery,
+  queryMealDBByName
 }
 
 express()
@@ -88,6 +94,10 @@ express()
   })
   .get('/finder', async function (req, res) {
     const results = await getRecipesQuery()
+    let response
+    if (req.body.search !== null && req.body.search !== '') {
+      response = await queryMealDBByName(req.body.search)
+    }
     res.render('pages/finder', { recipes: results.result })
   })
   .get('/addRecipe', function (req, res) {

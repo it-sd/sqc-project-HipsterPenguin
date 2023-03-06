@@ -7,12 +7,14 @@
     <%- include('../shared/header.ejs') %>
     <body>
         <main>
-            <div id="Search">
-                <form>
-
+            <div class="Section" id="Search">
+                <form action="finder">
+                    <label for="search">Recipe Name:</label>
+                    <input type="text" id="search" name="search">
+                    <input id="SearchSubmitButton" type="submit" value="Submit">
                 </form>
             </div>
-            <div id="RecipeList">
+            <div class="Section" id="RecipeList">
                 <table>
                     <tr>
                         <th>Recipe Name</th>
@@ -40,6 +42,4 @@
             </div>
         </main>
     </body>
-    <script>
-    </script>
 </html>

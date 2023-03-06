@@ -68,6 +68,15 @@ table, th, td {
     background-color: darkOrange;
 }
 
+.Section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+}
+
 #MainHeader {
     display: flex;
     margin: 0 auto;
@@ -98,12 +107,6 @@ table, th, td {
 
 #SiteLogoIcon {
     margin-left: 10px;
-}
-
-#RecipeList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
 #NewRecipeForm {
