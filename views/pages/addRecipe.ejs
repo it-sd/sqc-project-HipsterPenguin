@@ -76,7 +76,7 @@
             const ingredientUnitInputs = document.getElementsByName("ingredientUnitInput");
             const stepTextInputs = document.getElementsByName("StepTextInput");
             const ingredients = [];
-            const steps = [];
+            let steps = '';
             for (let i = 0; i < ingredientNameInputs.length; i++) {
                 ingredients.push({
                     name: ingredientNameInputs[i].value,
@@ -85,7 +85,8 @@
                 });
             }
             for (let i = 0; i < stepTextInputs.length; i++) {
-                steps.push( (i+1).toString() + ". " + stepTextInputs[i].value);
+              if(stepTextInputs[i].value !== "")
+                steps += (i+1).toString() + "." + stepTextInputs[i].value + ' ';
             }
             const recipe = {
                 name: recipeName,

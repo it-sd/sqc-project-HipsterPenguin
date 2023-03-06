@@ -94,9 +94,15 @@ express()
   })
   .get('/finder', async function (req, res) {
     const results = await getRecipesQuery()
+    res.render('pages/finder', { recipes: results.result })
+  })
+  .get('/finder/:search', async function (req, res) {
+    const results = await getRecipesQuery()
     let response
-    if (req.body.search !== null && req.body.search !== '') {
-      response = await queryMealDBByName(req.body.search)
+    if (req.params.search !== undefined || req.params.search !== null) {
+      response = await queryMealDBByName(req.params.search)
+      const json = await response.json()
+      console.log(json)
     }
     res.render('pages/finder', { recipes: results.result })
   })
@@ -111,6 +117,7 @@ express()
     const { name, calsPerServing, costPerServing, ingredients, steps } = req.body
     console.log(name)
     console.log(calsPerServing)
+    console.log(steps)
     if (name === null || name === '' || ingredients === null || ingredients === '' || steps === null || steps === '') {
       res.status(400).send('Bad Request')
       res.end()
@@ -123,11 +130,10 @@ express()
         const params2 = [ingredients[i]]
         const ingredientResult = await query(sql2, params2)
       }
-      const sql3 = 'INSERT INTO StepList (recipe_id, step_number, step_text) VALUES ($1, $2, $3);'
-      for (let i = 0; i < steps.length; i++) {
-        const params3 = [recipeResult[0].id, i + 1, steps[i]]
-        const stepResult = await query(sql3, params3)
-      }
+      const sql3 = 'INSERT INTO StepList (recipe_id, step_text) VALUES ($1, $2);'
+      const params3 = [recipeResult.id, steps]
+      const stepResult = await query(sql3, params3)
+
       const sql4 = 'INSERT INTO IngredientList (recipe_id, ingredient_id, amount) VALUES ($1, $2, $3);'
       for (let i = 0; i < ingredients.length; i++) {
         const params4 = [recipeResult[0].id, i + 1, ingredients[i]]

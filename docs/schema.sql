@@ -11,9 +11,7 @@ CREATE TABLE Ingredient (
 
 CREATE TABLE Recipe (
     recipe_id SERIAL PRIMARY KEY,
-    recipe_name TEXT NOT NULL,
-    cal_per_serving INTEGER NOT NULL,
-    cost_per_serving MONEY NOT NULL
+    recipe_name TEXT NOT NULL
 );
 
 CREATE TABLE IngredientList (
@@ -26,16 +24,15 @@ CREATE TABLE IngredientList (
 );
 
 CREATE TABLE StepList (
-    recipe_id SERIAL NOT NULL,
-    step_number INTEGER NOT NULL,
+    step_id SERIAL NOT NULL,
+    recipe_id INTEGER NOT NULL,
     step_text TEXT NOT NULL,
-    PRIMARY KEY (recipe_id, step_number),
+    PRIMARY KEY (recipe_id, step_id),
     FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
 );
 
 -- Test data
 INSERT INTO Ingredient (ingredient_name) VALUES ('Cheddar Cheese'), ('Flour Tortilla');
-INSERT INTO Recipe (recipe_name, cal_per_serving, cost_per_serving) VALUES ('Cheese Roll Up', 100, 1.00);
+INSERT INTO Recipe (recipe_name) VALUES ('Cheese Roll Up');
 INSERT INTO IngredientList (recipe_id, ingredient_id, amount) VALUES (1, 1, '1 cup'), (1, 2, '1 Tortilla');;
-INSERT INTO StepList (recipe_id, step_number, step_text) VALUES (1, 1, 'Roll up cheese in tortilla');
-INSERT INTO StepList (recipe_id, step_number, step_text) VALUES (1, 2, 'Cut into 4 pieces');
+INSERT INTO StepList (recipe_id, step_text)VALUES (1, '1.Roll up cheese in tortilla 2.Heat in microwave for 30 seconds 3.Cut into 4 pieces');
