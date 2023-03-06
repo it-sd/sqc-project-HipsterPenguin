@@ -93,8 +93,7 @@ express()
     res.render('pages/contact')
   })
   .get('/finder', async function (req, res) {
-    const results = await getRecipesQuery()
-    res.render('pages/finder', { recipes: results.result })
+    res.render('pages/finder')
   })
   .get('/finder/:search', async function (req, res) {
     const results = await getRecipesQuery()
@@ -107,6 +106,7 @@ express()
         for (let i = 0; i < json.meals.length; i++) {
           const recipe = {}
           recipe.recipe_name = json.meals[i].strMeal
+          recipe.recipe_link = json.meals[i].strSource
           recipes.push(recipe)
         }
       }

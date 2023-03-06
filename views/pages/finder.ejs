@@ -15,18 +15,30 @@
                 </form>
             </div>
             <div class="Section" id="RecipeList">
-                <table>
-                    <tr>
-                        <th>Recipe Name</th>
-                    </tr>
-                    <%_ for (const recipe of recipes) { _%>
-                        <%_ if (recipe.recipe_name !== null) { _%>
-                        <tr><td><%= recipe.recipe_name %></td></tr>
-                        <%_ } else { _%>
-                            <tr><td>Recipe Name Not Found</td></tr>
+                <%_ if (recipes.length < 1) { _%>
+                    <p>No recipes found</p>
+                <%_ } else { _%>
+                    <table>
+                        <tr>
+                            <th>Recipe Name</th>
+                            <th>Recipe Link</th>
+                        </tr>
+                        <%_ for (const recipe of recipes) { _%>
+                            <tr>
+                            <%_ if (recipe.recipe_name !== null) { _%>
+                                <td><%= recipe.recipe_name %></td>
+                            <%_ } else { _%>
+                                <td>Recipe Name Not Found</td>
+                            <%_ } _%>
+                            <% if (recipe.recipe_link !== null) { %>
+                                <td><a href="<%= recipe.recipe_link %>">Link</a></td>
+                            <% } else {%>
+                                <td>N/A</td>
+                            <% } %>
+                            </tr>
                         <%_ } _%>
-                    <%_ } _%>
-                </table>
+                    </table>
+                <%_ } _%>
             </div>
         </main>
     </body>
