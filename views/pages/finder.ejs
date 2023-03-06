@@ -7,6 +7,11 @@
     <%- include('../shared/header.ejs') %>
     <body>
         <main>
+            <div id="Search">
+                <form>
+
+                </form>
+            </div>
             <div id="RecipeList">
                 <table>
                     <tr>
@@ -16,11 +21,19 @@
                     </tr>
                     <tr>
                         <%_ for (const recipe of recipes) { _%>
-                            <% if (recipe.recipe_name !== null) { %>
+                            <%_ if (recipe.recipe_name !== null) { _%>
                                 <td><%= recipe.recipe_name %></td>
-                                <td><%= recipe.cal_per_serving %></td>
-                                <td><%= recipe.cost_per_serving %></td>
-                            <% } %>
+                                <%_ if (recipe.cal_per_serving !== null) {_%>
+                                    <td><%= recipe.cal_per_serving %></td>
+                                <%_ } else { _%>
+                                <td>N/A</td>
+                                <% } %>
+                                <%_ if (recipe.cost_per_serving !== null) { _%>
+                                    <td><%= recipe.cost_per_serving %></td>
+                            <%_ } else { _%>
+                                <td>N/A</td>
+                            <%_ } _%>
+                            <%_ } _%>
                         <%_ } _%>
                     </tr>
                 </table>

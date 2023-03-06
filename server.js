@@ -99,24 +99,31 @@ express()
   })
   .post('/newRecipe', async function (req, res) {
     const { name, calsPerServing, costPerServing, ingredients, steps } = req.body
-    const sql = 'INSERT INTO Recipe (name, calsPerServing, costPerServing) VALUES ($1, $2, $3);'
-    const params = [name, calsPerServing, costPerServing]
-    const recipeResult = await query(sql, params)
-    const sql2 = 'INSERT INTO Ingredient (ingredient_name) VALUES ($1);'
-    for (let i = 0; i < ingredients.length; i++) {
-      const params2 = [ingredients[i]]
-      const ingredientResult = await query(sql2, params2)
+    console.log(name)
+    console.log(calsPerServing)
+    if (name === null || name === '' || ingredients === null || ingredients === '' || steps === null || steps === '') {
+      res.status(400).send('Bad Request')
+      res.end()
+    } else {
+      const sql = 'INSERT INTO Recipe (name, calsPerServing, costPerServing) VALUES ($1, $2, $3);'
+      const params = [name, calsPerServing, costPerServing]
+      const recipeResult = await query(sql, params)
+      const sql2 = 'INSERT INTO Ingredient (ingredient_name) VALUES ($1);'
+      for (let i = 0; i < ingredients.length; i++) {
+        const params2 = [ingredients[i]]
+        const ingredientResult = await query(sql2, params2)
+      }
+      const sql3 = 'INSERT INTO StepList (recipe_id, step_number, step_text) VALUES ($1, $2, $3);'
+      for (let i = 0; i < steps.length; i++) {
+        const params3 = [recipeResult[0].id, i + 1, steps[i]]
+        const stepResult = await query(sql3, params3)
+      }
+      const sql4 = 'INSERT INTO IngredientList (recipe_id, ingredient_id, amount) VALUES ($1, $2, $3);'
+      for (let i = 0; i < ingredients.length; i++) {
+        const params4 = [recipeResult[0].id, i + 1, ingredients[i]]
+        const ingredientListResult = await query(sql4, params4)
+      }
+      res.status(200).json({ recipeResult })
     }
-    const sql3 = 'INSERT INTO StepList (recipe_id, step_number, step_text) VALUES ($1, $2, $3);'
-    for (let i = 0; i < steps.length; i++) {
-      const params3 = [recipeResult[0].id, i + 1, steps[i]]
-      const stepResult = await query(sql3, params3)
-    }
-    const sql4 = 'INSERT INTO IngredientList (recipe_id, ingredient_id, amount) VALUES ($1, $2, $3);'
-    for (let i = 0; i < ingredients.length; i++) {
-      const params4 = [recipeResult[0].id, i + 1, ingredients[i]]
-      const ingredientListResult = await query(sql4, params4)
-    }
-    res.status(200).json({ recipeResult })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))

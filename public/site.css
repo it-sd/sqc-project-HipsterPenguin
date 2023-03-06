@@ -64,6 +64,10 @@ table, th, td {
     background-color: darkOrange;
 }
 
+.navButton:target {
+    background-color: darkOrange;
+}
+
 #MainHeader {
     display: flex;
     margin: 0 auto;
