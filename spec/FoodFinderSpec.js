@@ -34,7 +34,6 @@ describe('getRecipes Fetch', function () {
     expect(body.recipes.length).toBeGreaterThan(0)
   })
 })
-
 describe('QueryMealDBByName', function () {
   it('should return a status between 200 & 399 and give a list of recipes', async function () {
     const result = await queryMealDBByName('chicken')
@@ -42,5 +41,14 @@ describe('QueryMealDBByName', function () {
     expect(result.status).toBeLessThanOrEqual(399)
     const json = await result.json()
     expect(json.meals).toBeDefined()
+  })
+})
+
+describe('GET /finder', function () {
+  it('should return a status between 200 & 399 and give a list of recipes', async function () {
+    const result = await fetch(baseUrl + '/finder')
+    expect(result.status).toBeGreaterThanOrEqual(200)
+    expect(result.status).toBeLessThanOrEqual(399)
+    const body = await result.text()
   })
 })
