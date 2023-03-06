@@ -100,11 +100,27 @@ express()
     const results = await getRecipesQuery()
     let response
     if (req.params.search !== undefined || req.params.search !== null) {
+      const recipes = []
       response = await queryMealDBByName(req.params.search)
       const json = await response.json()
-      console.log(json)
+      if (json.meals !== null) {
+        for (let i = 0; i < json.meals.length; i++) {
+          const recipe = {}
+          recipe.recipe_name = json.meals[i].strMeal
+          recipes.push(recipe)
+        }
+      }
+      for (let i = 0; i < results.result.length; i++) {
+        const recipe = {}
+        if (results.result[i].recipe_name.toLowerCase().includes(req.params.search.toLowerCase())) {
+          recipe.recipe_name = results.result[i].recipe_name
+          recipes.push(recipe)
+        }
+      }
+      res.render('pages/finder', { recipes: recipes })
+    } else {
+      res.render('pages/finder', { recipes: results.result })
     }
-    res.render('pages/finder', { recipes: results.result })
   })
   .get('/addRecipe', function (req, res) {
     res.render('pages/addRecipe')
@@ -127,7 +143,7 @@ express()
       const recipeResult = await query(sql, params)
       const sql2 = 'INSERT INTO Ingredient (ingredient_name) VALUES ($1);'
       for (let i = 0; i < ingredients.length; i++) {
-        const params2 = [ingredients[i]]
+        const params2 = [ingredients[i].name]
         const ingredientResult = await query(sql2, params2)
       }
       const sql3 = 'INSERT INTO StepList (recipe_id, step_text) VALUES ($1, $2);'

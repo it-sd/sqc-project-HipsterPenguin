@@ -15,7 +15,7 @@ CREATE TABLE Recipe (
 );
 
 CREATE TABLE IngredientList (
-    recipe_id SERIAL NOT NULL,
+    recipe_id INTEGER NOT NULL,
     ingredient_id INTEGER NOT NULL,
     amount TEXT NOT NULL,
     PRIMARY KEY (recipe_id, ingredient_id),

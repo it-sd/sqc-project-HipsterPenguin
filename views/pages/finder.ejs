@@ -18,26 +18,14 @@
                 <table>
                     <tr>
                         <th>Recipe Name</th>
-                        <th>Calories Per Serving</th>
-                        <th>Cost Per Serving</th>
                     </tr>
-                    <tr>
-                        <%_ for (const recipe of recipes) { _%>
-                            <%_ if (recipe.recipe_name !== null) { _%>
-                                <td><%= recipe.recipe_name %></td>
-                                <%_ if (recipe.cal_per_serving !== null) {_%>
-                                    <td><%= recipe.cal_per_serving %></td>
-                                <%_ } else { _%>
-                                <td>N/A</td>
-                                <% } %>
-                                <%_ if (recipe.cost_per_serving !== null) { _%>
-                                    <td><%= recipe.cost_per_serving %></td>
-                            <%_ } else { _%>
-                                <td>N/A</td>
-                            <%_ } _%>
-                            <%_ } _%>
+                    <%_ for (const recipe of recipes) { _%>
+                        <%_ if (recipe.recipe_name !== null) { _%>
+                        <tr><td><%= recipe.recipe_name %></td></tr>
+                        <%_ } else { _%>
+                            <tr><td>Recipe Name Not Found</td></tr>
                         <%_ } _%>
-                    </tr>
+                    <%_ } _%>
                 </table>
             </div>
         </main>
