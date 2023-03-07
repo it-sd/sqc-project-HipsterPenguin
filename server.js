@@ -1,11 +1,15 @@
 // const fetch = require('node-fetch')
 import fetch from 'node-fetch'
-require('dotenv').config()
-
-const express = require('express')
-const path = require('path')
-const assert = require('assert')
-const { Pool } = require('pg')
+import dotenv from 'dotenv'
+import express from 'express'
+import path from 'path'
+import assert from 'assert'
+import pg from 'pg'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const { Pool } = pg
+dotenv.config()
 
 const PORT = process.env.PORT || 5163
 
@@ -68,7 +72,7 @@ const queryMealDBByName = async function (name) {
   return result
 }
 
-module.exports = {
+export {
   query,
   healthQuery,
   getRecipesQuery,

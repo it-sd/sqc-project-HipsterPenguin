@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Your name or CVTC username",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "jasmine",
     "lint": "npx eslint \"**/*.js\"",
