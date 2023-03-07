@@ -15,7 +15,7 @@
                 </form>
             </div>
             <div class="Section" id="RecipeList">
-                <%_ if (recipes.length < 1) { _%>
+                <%_ if (recipes !== null && recipes !== undefined && recipes.length === 0) { _%>
                     <p>No recipes found</p>
                 <%_ } else { _%>
                     <table>

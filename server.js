@@ -93,7 +93,7 @@ express()
     res.render('pages/contact')
   })
   .get('/finder', async function (req, res) {
-    res.render('pages/finder')
+    res.render('pages/finder', { recipes: [] })
   })
   .get('/finder/:search', async function (req, res) {
     const results = await getRecipesQuery()
