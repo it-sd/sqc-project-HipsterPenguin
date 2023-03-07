@@ -1,9 +1,10 @@
+// const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 require('dotenv').config()
 
 const express = require('express')
 const path = require('path')
 const assert = require('assert')
-const fetch = require('node-fetch')
 const { Pool } = require('pg')
 
 const PORT = process.env.PORT || 5163
@@ -118,7 +119,7 @@ express()
           recipes.push(recipe)
         }
       }
-      res.render('pages/finder', { recipes: recipes })
+      res.render('pages/finder', { recipes })
     } else {
       res.render('pages/finder', { recipes: results.result })
     }
