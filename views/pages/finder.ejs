@@ -46,6 +46,8 @@
         document.getElementById('SearchSubmitButton').addEventListener("click", function(event) {
             console.log("clicked");
             event.preventDefault();
+            document.getElementById('SearchSubmitButton').disabled = true;
+            document.getElementById('RecipeList').innerHTML = "Loading...";
             const search = document.getElementById('search').value;
             window.location.href = "/finder/" + search;
         })
