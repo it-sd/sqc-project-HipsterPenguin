@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const assert = require('assert')
+const fetch = require("node-fetch");
 const { Pool } = require('pg')
 
 const PORT = process.env.PORT || 5163
