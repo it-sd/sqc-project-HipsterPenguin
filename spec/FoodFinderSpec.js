@@ -1,4 +1,4 @@
-const { query, healthQuery, getRecipesQuery, queryMealDBByName } = require('../server.js')
+import { healthQuery, getRecipesQuery, queryMealDBByName } from '../server.js'
 
 const baseUrl = 'http://localhost:5163'
 describe('healthQuery', function () {
