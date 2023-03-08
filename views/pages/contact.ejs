@@ -9,6 +9,50 @@
     <main>
         <h2>Contact</h2>
         <!--Implement contact form here-->
+        <form id="contactForm">
+            First Name: <input type="text" id="firstName" class="textBox"><br>
+            Last Name: <input type="text" id="lastName" class="textBox"><br>
+            Email: <input type="email" id="email" class="textBox"><br>
+            Subject: <input type="text" id="subject" class="textBox"><br>
+            Message:<br> <textarea id="message" rows="8" cols="60" class="textBox"></textarea><br>
+            <input type="button" id="sendButton" value="Submit">
+        </form>
     </main>
 </body>
+<script>
+
+    // Variables
+    const firstName = document.getElementById('firstName')
+    const lastName = document.getElementById('lastName')
+    const email = document.getElementById('email')
+    const subject = document.getElementById('subject')
+    const message = document.getElementById('message')
+    const sendButton = document.getElementById('sendButton')
+
+    // Input validation
+    const checkIfValid = function () {
+        // This constant is for email format validation
+        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        let isValid = true
+
+        if(firstName.value == "" || firstName.value == null || lastName.value == "" || lastName.value == null || lastName.value == "" || lastName.value == null || email.value == "" || email.value == null || !(email.value.match(validRegex)) || subject.value == "" || subject.value == null || message.value == "" || message.value == null){
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    const submit = async function () {
+
+        if(checkIfValid()){
+            // This is where all the tests have passed and you could actually send the message.
+            alert("Message sent!")
+        } else {
+            alert('Invalid input or format.\rRules:\r1. All fields must be filled\r2. Email should be in correct format')
+        }
+
+    }
+    // Creating an event listener for the button
+    sendButton.addEventListener('click', (e) => submit())
+</script>
 </html>
