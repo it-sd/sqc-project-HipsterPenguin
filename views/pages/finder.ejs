@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Finder</title>
+        <%- include('../shared/head_includes.ejs') %>
+    </head>
+    <%- include('../shared/header.ejs') %>
+    <body>
+        <main>
+            <div class="Section" id="Search">
+                <form action="finder" method="GET">
+                    <label for="search">Recipe Name:</label>
+                    <input type="text" id="search" name="search">
+                    <input id="SearchSubmitButton" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="Section" id="RecipeList">
+                <%_ if (recipes !== null && recipes !== undefined && recipes.length === 0) { _%>
+                    <p>No recipes found</p>
+                <%_ } else { _%>
+                    <table>
+                        <tr>
+                            <th>Recipe Name</th>
+                            <th>Recipe Link</th>
+                        </tr>
+                        <%_ for (const recipe of recipes) { _%>
+                            <tr>
+                            <%_ if (recipe.recipe_name !== null) { _%>
+                                <td><%= recipe.recipe_name %></td>
+                            <%_ } else { _%>
+                                <td>Recipe Name Not Found</td>
+                            <%_ } _%>
+                            <% if (recipe.recipe_link !== null) { %>
+                                <td><a href="<%= recipe.recipe_link %>">Link</a></td>
+                            <% } else {%>
+                                <td>N/A</td>
+                            <% } %>
+                            </tr>
+                        <%_ } _%>
+                    </table>
+                <%_ } _%>
+            </div>
+        </main>
+    </body>
+    <script>
+        document.getElementById('SearchSubmitButton').addEventListener("click", function(event) {
+            console.log("clicked");
+            event.preventDefault();
+            document.getElementById('SearchSubmitButton').disabled = true;
+            document.getElementById('RecipeList').innerHTML = "Loading...";
+            const search = document.getElementById('search').value;
+            window.location.href = "/finder/" + search;
+        })
+    </script>
+</html>

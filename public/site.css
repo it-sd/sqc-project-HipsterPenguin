@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    background-image: url("/background.jpg");
+}
+
+main {
+    margin: 0 auto auto auto;
+    width: 80%;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+nav {
+    text-align: center;
+    background-color: #08F;
+    border-radius: 5px;
+    border: 2px solid darkorange;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.navButton {
+    background-color: orange;
+    border: none;
+    color: #08F;
+    padding: 10px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+.navButton > a {
+    text-decoration: none;
+}
+
+.navButton:hover {
+    background-color: darkOrange;
+}
+
+.navButton:target {
+    background-color: darkOrange;
+}
+
+.Section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+}
+
+#MainHeader {
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+    align-items: center;
+}
+
+#MainHeaderTitle {
+    text-align: center;
+    color: #08F;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#SiteLogo {
+    width: 200px;
+    height: 80px;
+    margin-left: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    background-color: orange;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+#SiteLogoIcon {
+    margin-left: 10px;
+}
+
+#NewRecipeForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+    #MainHeader {
+        flex-direction: column;
+    }
+}
+
