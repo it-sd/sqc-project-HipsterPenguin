@@ -16,6 +16,7 @@
             Subject: <input type="text" id="subject" class="textBox"><br>
             Message:<br> <textarea id="message" rows="8" cols="60" class="textBox"></textarea><br>
             <input type="button" id="sendButton" value="Submit">
+            <h3 id="statusMessage"></h3>
         </form>
     </main>
 </body>
@@ -28,6 +29,7 @@
     const subject = document.getElementById('subject')
     const message = document.getElementById('message')
     const sendButton = document.getElementById('sendButton')
+    const statusMessage = document.getElementById('statusMessage')
 
     // Input validation
     const checkIfValid = function () {
@@ -46,9 +48,11 @@
 
         if(checkIfValid()){
             // This is where all the tests have passed and you could actually send the message.
-            alert("Message sent!")
+            statusMessage.style.color = 'green'
+            statusMessage.innerHTML = 'Message sent!'
         } else {
-            alert('Invalid input or format.\rRules:\r1. All fields must be filled\r2. Email should be in correct format')
+            statusMessage.style.color = 'red'
+            statusMessage.innerHTML = 'Invalid input or email format.'
         }
 
     }
