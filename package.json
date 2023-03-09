@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "jasmine",
-    "lint": "npx eslint \"**/*.js\"",
-    "coverage": "nyc npm test"
+    "coverage": "nyc npm test",
+    "lint": "eslint \"**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/it-sd/sqc-project-HipsterPenguin#readme",
   "devDependencies": {
-    "eslint": "^8.34.0",
+    "eslint": "^8.35.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
@@ -35,6 +35,7 @@
     "express": "^4.18.2",
     "node-fetch": "^3.3.0",
     "path": "^0.12.7",
-    "pg": "^8.9.0"
+    "pg": "^8.9.0",
+    "selenium-webdriver": "^4.8.1"
   }
 }
