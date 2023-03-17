@@ -12,10 +12,6 @@
                 <fieldset form="NewRecipeForm" name="Basic Info">
                     <label for="recipeNameInput">Recipe Name: </label>
                     <input type="text" name="recipeNameInput"> <br>
-                    <label for="recipeCalsPerServingInput">Calories per Serving: </label>
-                    <input type="number" name="recipeCalsPerServingInput"> <br>
-                    <label form="recipeCostPerServingInput">Cost per Serving: </label>
-                    <input type="number" name="recipeCostPerServingInput"> <br>
                 </fieldset>
                 <br>
                 <fieldset id="IngredientFieldSet" >
@@ -90,8 +86,6 @@
             }
             const recipe = {
                 name: recipeName,
-                calsPerServing: recipeCalsPerServing,
-                costPerServing: recipeCostPerServing,
                 ingredients: ingredients,
                 steps: steps
             }
