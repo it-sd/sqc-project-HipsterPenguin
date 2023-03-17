@@ -206,13 +206,13 @@ express()
     res.status(200).json({ recipes: results })
   })
   .post('/newRecipe', async function (req, res) {
-    const { name, ingredients, steps } = req.body
+    const { name, recipeLink, ingredients, steps } = req.body
     if (name === null || name === '' || ingredients === null || ingredients === '' || steps === null || steps === '') {
       res.status(400).send('Bad Request')
       res.end()
     } else {
-      const sql = 'INSERT INTO Recipe (name) VALUES ($1);'
-      const params = [name]
+      const sql = 'INSERT INTO Recipe (recipe_name, recipe_link) VALUES ($1, $2);'
+      const params = [name, recipeLink]
       const recipeResult = await query(sql, params)
       const sql2 = 'INSERT INTO Ingredient (ingredient_name) VALUES ($1);'
       for (let i = 0; i < ingredients.length; i++) {

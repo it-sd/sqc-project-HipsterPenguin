@@ -11,7 +11,8 @@ CREATE TABLE Ingredient (
 
 CREATE TABLE Recipe (
     recipe_id SERIAL PRIMARY KEY,
-    recipe_name TEXT NOT NULL
+    recipe_name TEXT NOT NULL,
+    recipe_link TEXT NOT NULL,
 );
 
 CREATE TABLE IngredientList (

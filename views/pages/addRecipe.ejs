@@ -12,6 +12,8 @@
                 <fieldset form="NewRecipeForm" name="Basic Info">
                     <label for="recipeNameInput">Recipe Name: </label>
                     <input type="text" name="recipeNameInput"> <br>
+                    <label for="recipeLinkInput">Recipe Link: </label>
+                    <input type="text" name="recipeLinkInput"> <br>
                 </fieldset>
                 <br>
                 <fieldset id="IngredientFieldSet" >
@@ -65,8 +67,7 @@
         const submitRecipe = function(event) {
             event.preventDefault();
             const recipeName = document.getElementsByName("recipeNameInput")[0].value;
-            const recipeCalsPerServing = document.getElementsByName("recipeCalsPerServingInput")[0].value;
-            const recipeCostPerServing = document.getElementsByName("recipeCostPerServingInput")[0].value;
+            const recipeLink = document.getElementsByName("recipeLinkInput")[0].value;
             const ingredientNameInputs = document.getElementsByName("ingredientNameInput");
             const ingredientAmountInputs = document.getElementsByName("ingredientAmountInput");
             const ingredientUnitInputs = document.getElementsByName("ingredientUnitInput");
@@ -86,6 +87,7 @@
             }
             const recipe = {
                 name: recipeName,
+                link: recipeLink,
                 ingredients: ingredients,
                 steps: steps
             }
