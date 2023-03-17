@@ -72,6 +72,10 @@ const queryMealDBByName = async function (name) {
   return result
 }
 
+const querySpoonacularByIngredients = async function (ingredients, maxNumber) {
+
+}
+
 export {
   query,
   healthQuery,
@@ -136,16 +140,13 @@ express()
     res.status(200).json({ recipes: results.result })
   })
   .post('/newRecipe', async function (req, res) {
-    const { name, calsPerServing, costPerServing, ingredients, steps } = req.body
-    console.log(name)
-    console.log(calsPerServing)
-    console.log(steps)
+    const { name, ingredients, steps } = req.body
     if (name === null || name === '' || ingredients === null || ingredients === '' || steps === null || steps === '') {
       res.status(400).send('Bad Request')
       res.end()
     } else {
-      const sql = 'INSERT INTO Recipe (name, calsPerServing, costPerServing) VALUES ($1, $2, $3);'
-      const params = [name, calsPerServing, costPerServing]
+      const sql = 'INSERT INTO Recipe (name) VALUES ($1);'
+      const params = [name]
       const recipeResult = await query(sql, params)
       const sql2 = 'INSERT INTO Ingredient (ingredient_name) VALUES ($1);'
       for (let i = 0; i < ingredients.length; i++) {
@@ -153,7 +154,7 @@ express()
         const ingredientResult = await query(sql2, params2)
       }
       const sql3 = 'INSERT INTO StepList (recipe_id, step_text) VALUES ($1, $2);'
-      const params3 = [recipeResult.id, steps]
+      const params3 = [recipeResult[0].id, steps]
       const stepResult = await query(sql3, params3)
 
       const sql4 = 'INSERT INTO IngredientList (recipe_id, ingredient_id, amount) VALUES ($1, $2, $3);'
