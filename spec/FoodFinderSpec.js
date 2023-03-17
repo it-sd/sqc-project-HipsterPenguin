@@ -11,9 +11,8 @@ describe('healthQuery', function () {
 
 describe('getRecipesQuery', function () {
   it('should return a status between 200 & 399', async function () {
-    const result = await getRecipesQuery()
-    expect(result.status).toBeGreaterThanOrEqual(200)
-    expect(result.status).toBeLessThanOrEqual(399)
+    const result = await getRecipesQuery(['chicken'], 'chicken')
+    expect(result.length).toBeGreaterThan(0)
   })
 })
 

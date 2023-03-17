@@ -71,30 +71,32 @@ const healthQuery = async function () {
 
 const getRecipesQuery = async function (ingredients, name) {
   let finalList = []
-  if (ingredients[0] !== 'none') {
-    const mealDbResults = await queryMealDBByIngredients(ingredients)
-    for (const recipe of mealDbResults) {
-      finalList.push(recipe)
+  if (ingredients !== undefined) {
+    if (ingredients[0] !== 'none') {
+      const mealDbResults = await queryMealDBByIngredients(ingredients)
+      for (const recipe of mealDbResults) {
+        finalList.push(recipe)
+      }
     }
-  }
-  const localDbResults = await query('SELECT * FROM Recipe;', [])
-  const recipes = []
-  for (const recipe of localDbResults) {
-    const newRecipe = {}
-    newRecipe.ingredients = []
-    newRecipe.recipe_name = recipe.recipe_name
-    const recipeIngredients = await query('SELECT * FROM IngredientList INNER JOIN Ingredient ON ' +
-      'IngredientList.ingredient_id = Ingredient.ingredient_id WHERE recipe_id = $1;', [recipe.recipe_id])
-    for (const ingredient of recipeIngredients) {
-      newRecipe.ingredients.push(ingredient.ingredient_name.toLowerCase())
+    const localDbResults = await query('SELECT * FROM Recipe;', [])
+    const recipes = []
+    for (const recipe of localDbResults) {
+      const newRecipe = {}
+      newRecipe.ingredients = []
+      newRecipe.recipe_name = recipe.recipe_name
+      const recipeIngredients = await query('SELECT * FROM IngredientList INNER JOIN Ingredient ON ' +
+        'IngredientList.ingredient_id = Ingredient.ingredient_id WHERE recipe_id = $1;', [recipe.recipe_id])
+      for (const ingredient of recipeIngredients) {
+        newRecipe.ingredients.push(ingredient.ingredient_name.toLowerCase())
+      }
+      recipes.push(newRecipe)
     }
-    recipes.push(newRecipe)
-  }
-  for (const recipe of recipes) {
-    for (const ingredient of ingredients) {
-      for (const recipeIngredient of recipe.ingredients) {
-        if (recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())) {
-          finalList.push(recipe)
+    for (const recipe of recipes) {
+      for (const ingredient of ingredients) {
+        for (const recipeIngredient of recipe.ingredients) {
+          if (recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())) {
+            finalList.push(recipe)
+          }
         }
       }
     }
@@ -173,7 +175,7 @@ express()
   .get('/finder/:search', async function (req, res) {
     const results = await getRecipesQuery()
     let response
-    if (req.params.search !== undefined || req.params.search !== null) {
+    if (req.params.search !== undefined) {
       const recipes = []
       response = await queryMealDBByName(req.params.search)
       const json = await response.json()
@@ -185,11 +187,13 @@ express()
           recipes.push(recipe)
         }
       }
-      for (let i = 0; i < results.result.length; i++) {
-        const recipe = {}
-        if (results.result[i].recipe_name.toLowerCase().includes(req.params.search.toLowerCase())) {
-          recipe.recipe_name = results.result[i].recipe_name
-          recipes.push(recipe)
+      if (results.result !== undefined) {
+        for (let i = 0; i < results.result.length; i++) {
+          const recipe = {}
+          if (results.result[i].recipe_name.toLowerCase().includes(req.params.search.toLowerCase())) {
+            recipe.recipe_name = results.result[i].recipe_name
+            recipes.push(recipe)
+          }
         }
       }
       res.render('pages/finder', { recipes })
