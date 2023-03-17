@@ -50,10 +50,31 @@
             // This is where all the tests have passed and you could actually send the message.
             statusMessage.style.color = 'green'
             statusMessage.innerHTML = 'Message sent!'
+            const res = fetch('/newContactRequest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    email: email.value,
+                    subject: subject.value,
+                    message: message.value
+                })
+            })
+            if (res.ok) {
+                statusMessage.style.color = 'green'
+                statusMessage.innerHTML = 'Message sent!'
+            } else {
+                statusMessage.style.color = 'red'
+                statusMessage.innerHTML = 'Something went wrong.'
+            }
         } else {
             statusMessage.style.color = 'red'
             statusMessage.innerHTML = 'Invalid input or email format.'
         }
+
 
     }
     // Creating an event listener for the button
