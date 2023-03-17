@@ -31,6 +31,15 @@ CREATE TABLE StepList (
     FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
 );
 
+CREATE TABLE contact_message (
+    contact_id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL
+);
+
 -- Test data
 INSERT INTO Ingredient (ingredient_name) VALUES ('Cheddar Cheese'), ('Flour Tortilla');
 INSERT INTO Recipe (recipe_name) VALUES ('Cheese Roll Up');
