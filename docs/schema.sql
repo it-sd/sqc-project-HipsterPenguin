@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS IngredientList;
 DROP TABLE IF EXISTS Ingredient;
 DROP TABLE IF EXISTS StepList;
 DROP TABLE IF EXISTS Recipe;
+DROP TABLE IF EXISTS ContactMessage;
 
 
 CREATE TABLE Ingredient (
@@ -12,7 +13,7 @@ CREATE TABLE Ingredient (
 CREATE TABLE Recipe (
     recipe_id SERIAL PRIMARY KEY,
     recipe_name TEXT NOT NULL,
-    recipe_link TEXT NOT NULL,
+    recipe_link TEXT
 );
 
 CREATE TABLE IngredientList (
@@ -32,7 +33,7 @@ CREATE TABLE StepList (
     FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
 );
 
-CREATE TABLE contact_message (
+CREATE TABLE ContactMessage (
     contact_id SERIAL PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
