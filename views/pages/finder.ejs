@@ -9,8 +9,13 @@
         <main>
             <div class="Row">
                 <div class="StaticSection" id="Search">
+                    <div class="popup" onclick="infoPopup()">
+                        <img width="25" height="25" src="info_icon.png" id="infoPopupIcon">
+                        <span class="popuptext" id="infoPopup">Just enter in the name of your recipe or some ingredients to get links to recipes.</span>
+                    </div>
                     <form id="SearchForm">
                         <label for="search">Recipe Name:</label>
+                        <br>
                         <input type="text" id="search" name="search">
                         <br>
                         <div id="IngredientSearch">
@@ -117,5 +122,10 @@
             newIngredient.name = 'ingredients';
             ingredientSearch.appendChild(newIngredient);
         });
+
+        function infoPopup() {
+            const popup = document.querySelector('#infoPopup');
+            popup.classList.toggle('show');
+        }
     </script>
 </html>
