@@ -231,11 +231,19 @@ express()
       res.status(200).json({ recipeResult })
     }
   })
-  .post('/newContactRequest', function (req, res) {
-    const { firstName, lastName, email, subject, message } = req.body
-    const sql = 'INSERT INTO contact_message (first_name, last_name, email, subject, message) VALUES ($1, $2, $3, $4, $5);'
+  .post('/newContactRequest', async function (req, res) {
+    const {
+      firstName,
+      lastName,
+      email,
+      subject,
+      message
+    } = req.body
+    console.log(req.body)
+    const sql = 'INSERT INTO ContactMessage (first_name, last_name, email, subject, message) VALUES ($1, $2, $3, $4, $5);'
     const params = [firstName, lastName, email, subject, message]
-    const result = query(sql, params)
+    const result = await query(sql, params)
+    console.log(result)
     res.status(200).json({ result })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))

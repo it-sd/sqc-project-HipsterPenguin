@@ -49,6 +49,24 @@ describe('GET /finder', function () {
     const result = await fetch(baseUrl + '/finder')
     expect(result.status).toBeGreaterThanOrEqual(200)
     expect(result.status).toBeLessThanOrEqual(399)
-    const body = await result.text()
+  })
+})
+
+describe('GET /finder/:search', function () {
+  it('should return a status between 200 & 399 and give a list of recipes', async function () {
+    const result = await fetch(baseUrl + '/finder/chicken')
+    expect(result.status).toBeGreaterThanOrEqual(200)
+    expect(result.status).toBeLessThanOrEqual(399)
+  })
+})
+
+describe('GET /getRecipes/:ingredients/:name', function () {
+  it('should return a status between 200 & 399 and give a list of recipes', async function () {
+    const result = await fetch(baseUrl + '/getRecipes/chicken,carrot,spinach,beef,apple,orange/Chicken')
+    expect(result.status).toBeGreaterThanOrEqual(200)
+    expect(result.status).toBeLessThanOrEqual(399)
+    const body = await result.json()
+    expect(body.recipes).toBeDefined()
+    expect(body.recipes.length).toBeGreaterThan(0)
   })
 })

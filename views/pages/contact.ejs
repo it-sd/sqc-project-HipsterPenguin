@@ -50,7 +50,7 @@
             // This is where all the tests have passed and you could actually send the message.
             statusMessage.style.color = 'green'
             statusMessage.innerHTML = 'Message sent!'
-            const res = fetch('/newContactRequest', {
+            const res = await fetch('/newContactRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -63,6 +63,7 @@
                     message: message.value
                 })
             })
+            console.log(res)
             if (res.ok) {
                 statusMessage.style.color = 'green'
                 statusMessage.innerHTML = 'Message sent!'
