@@ -68,9 +68,31 @@ table, th, td {
     background-color: darkOrange;
 }
 
+.StaticSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+    box-shadow: darkOrange 0px 0px 10px;
+}
+
 .Section {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+    box-shadow: darkOrange 0px 0px 10px;
+}
+
+.Row {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     margin: 0 auto;
     width: 80%;
@@ -132,6 +154,46 @@ table, th, td {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+#SearchSubmitButton {
+    background-color: orange;
+    border-radius: 8px;
+    color: black;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#AddIngredientButton {
+    background-color: orange;
+    border-radius: 8px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#AddIngredientButtonDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+}
+
+#IngredientSearch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .textBox {

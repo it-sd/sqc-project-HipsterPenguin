@@ -7,49 +7,115 @@
     <%- include('../shared/header.ejs') %>
     <body>
         <main>
-            <div class="Section" id="Search">
-                <form action="finder" method="GET">
-                    <label for="search">Recipe Name:</label>
-                    <input type="text" id="search" name="search">
-                    <input id="SearchSubmitButton" type="submit" value="Submit">
-                </form>
-            </div>
-            <div class="Section" id="RecipeList">
-                <%_ if (recipes !== null && recipes !== undefined && recipes.length === 0) { _%>
-                    <p>No recipes found</p>
-                <%_ } else { _%>
-                    <table>
-                        <tr>
-                            <th>Recipe Name</th>
-                            <th>Recipe Link</th>
-                        </tr>
-                        <%_ for (const recipe of recipes) { _%>
+            <div class="Row">
+                <div class="StaticSection" id="Search">
+                    <form id="SearchForm">
+                        <label for="search">Recipe Name:</label>
+                        <input type="text" id="search" name="search">
+                        <br>
+                        <div id="IngredientSearch">
+                            <label for="Ingredients">Ingredients:</label>
+                            <input type="text" id="ingredients" name="ingredients">
+                            <br>
+                        </div>
+                        <div id="AddIngredientButtonDiv">
+                            <button id="AddIngredientButton">Add an Ingredient</button>
+                        </div>
+                        <br>
+                        <input id="SearchSubmitButton" type="submit" value="Submit">
+                    </form>
+                </div>
+                <div class="Section" id="RecipeList">
+                    <h2>Recipes</h2>
+                    <br>
+                    <table id="RecipeTable">
+                    <%_ if (recipes === null && recipes === undefined && recipes.length === 0) { _%>
+                        <p>No recipes found</p>
+                    <%_ } else { _%>
                             <tr>
-                            <%_ if (recipe.recipe_name !== null) { _%>
-                                <td><%= recipe.recipe_name %></td>
-                            <%_ } else { _%>
-                                <td>Recipe Name Not Found</td>
-                            <%_ } _%>
-                            <% if (recipe.recipe_link !== null) { %>
-                                <td><a href="<%= recipe.recipe_link %>">Link</a></td>
-                            <% } else {%>
-                                <td>N/A</td>
-                            <% } %>
+                                <th>Recipe Name</th>
+                                <th>Recipe Link</th>
                             </tr>
+                            <%_ for (const recipe of recipes) { _%>
+                                <tr>
+                                <%_ if (recipe.recipe_name !== null) { _%>
+                                    <td><%= recipe.recipe_name %></td>
+                                <%_ } else { _%>
+                                    <td>Recipe Name Not Found</td>
+                                <%_ } _%>
+                                <% if (recipe.recipe_link !== null) { %>
+                                    <td><a href="<%= recipe.recipe_link %>">Link</a></td>
+                                <% } else {%>
+                                    <td>N/A</td>
+                                <% } %>
+                                </tr>
+                            <%_ } _%>
                         <%_ } _%>
                     </table>
-                <%_ } _%>
+                </div>
             </div>
         </main>
     </body>
     <script>
-        document.getElementById('SearchSubmitButton').addEventListener("click", function(event) {
-            console.log("clicked");
-            event.preventDefault();
-            document.getElementById('SearchSubmitButton').disabled = true;
-            document.getElementById('RecipeList').innerHTML = "Loading...";
-            const search = document.getElementById('search').value;
-            window.location.href = "/finder/" + search;
+        document.getElementById('SearchSubmitButton').addEventListener("click", async function (event) {
+          event.preventDefault();
+          const table = document.getElementById('RecipeTable');
+          let name = document.getElementById('search').value;
+          if (name ===''){
+            name = 'none'
+          }
+          const ingredients = document.getElementsByName('ingredients');
+          let ingredientString = '';
+          for (let i = 0; i < ingredients.length; i++) {
+            ingredientString += ingredients[i].value;
+            if (i !== ingredients.length - 1) {
+              ingredientString += ',';
+            }
+          }
+            if (ingredientString === '') {
+                ingredientString = 'none'
+            }
+          const url = '/getRecipes/' + ingredientString + '/' + name;
+          table.innerHTML = 'Loading...';
+          const res = await fetch(url);
+          const json = await res.json();
+          if (res.ok) {
+            table.innerHTML = '';
+            const header = table.insertRow();
+            const nameHeader = header.insertCell();
+            const linkHeader = header.insertCell();
+            nameHeader.innerHTML = 'Recipe Name';
+            linkHeader.innerHTML = 'Recipe Link';
+            for (const recipe of json.recipes) {
+              const table = document.getElementById('RecipeTable');
+              const row = table.insertRow();
+              const nameCell = row.insertCell();
+              const linkCell = row.insertCell();
+              const link = document.createElement('a');
+              if (recipe.recipe_link === undefined || recipe.recipe_link === null) {
+                link.innerHTML = 'N/A';
+              }
+              else {
+                link.href = recipe.recipe_link;
+                link.innerHTML = 'Link';
+              }
+              nameCell.innerHTML = recipe.recipe_name;
+              linkCell.appendChild(link);
+            }
+          } else {
+            table.innerHTML = 'No recipes found';
+          }
         })
+
+        const addIngredientButton = document.querySelector('#AddIngredientButton');
+
+        addIngredientButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const ingredientSearch = document.querySelector('#IngredientSearch');
+            const newIngredient = document.createElement('input');
+            newIngredient.type = 'text';
+            newIngredient.name = 'ingredients';
+            ingredientSearch.appendChild(newIngredient);
+        });
     </script>
 </html>

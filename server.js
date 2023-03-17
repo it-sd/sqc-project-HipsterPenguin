@@ -39,6 +39,22 @@ const query = async function (sql, params) {
   return results
 }
 
+const removeDuplicateRecipes = function (recipes) {
+  const uniqueRecipes = []
+  for (const recipe of recipes) {
+    let counter = 0
+    for (const recipe2 of recipes) {
+      if (recipe.recipe_name === recipe2.recipe_name) {
+        counter++
+      }
+    }
+    if (counter === 1) {
+      uniqueRecipes.push(recipe)
+    }
+  }
+  return uniqueRecipes
+}
+
 const healthQuery = async function () {
   const result = await query('SELECT * FROM Recipe LIMIT 1;', [])
 
@@ -53,18 +69,50 @@ const healthQuery = async function () {
   return { status, msg }
 }
 
-const getRecipesQuery = async function () {
-  const result = await query('SELECT * FROM Recipe;', [])
-
-  let status = 200
-  let msg = 'healthy'
-
-  if (result === undefined || result.length === 0) {
-    status = 500
-    msg = 'unhealthy'
+const getRecipesQuery = async function (ingredients, name) {
+  let finalList = []
+  if (ingredients[0] !== 'none') {
+    const mealDbResults = await queryMealDBByIngredients(ingredients)
+    for (const recipe of mealDbResults) {
+      finalList.push(recipe)
+    }
   }
-
-  return { status, msg, result }
+  const localDbResults = await query('SELECT * FROM Recipe;', [])
+  const recipes = []
+  for (const recipe of localDbResults) {
+    const newRecipe = {}
+    newRecipe.ingredients = []
+    newRecipe.recipe_name = recipe.recipe_name
+    const recipeIngredients = await query('SELECT * FROM IngredientList INNER JOIN Ingredient ON ' +
+      'IngredientList.ingredient_id = Ingredient.ingredient_id WHERE recipe_id = $1;', [recipe.recipe_id])
+    for (const ingredient of recipeIngredients) {
+      newRecipe.ingredients.push(ingredient.ingredient_name.toLowerCase())
+    }
+    recipes.push(newRecipe)
+  }
+  for (const recipe of recipes) {
+    for (const ingredient of ingredients) {
+      for (const recipeIngredient of recipe.ingredients) {
+        if (recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())) {
+          finalList.push(recipe)
+        }
+      }
+    }
+  }
+  if (name !== undefined) {
+    const results = await queryMealDBByName(name)
+    const jsonResults = await results.json()
+    if (jsonResults.meals !== null) {
+      for (const recipe of jsonResults.meals) {
+        const displayRecipe = {}
+        displayRecipe.recipe_name = recipe.strMeal
+        displayRecipe.recipe_link = recipe.strSource
+        finalList.push(displayRecipe)
+      }
+    }
+  }
+  finalList = removeDuplicateRecipes(finalList)
+  return finalList
 }
 
 const queryMealDBByName = async function (name) {
@@ -72,8 +120,25 @@ const queryMealDBByName = async function (name) {
   return result
 }
 
-const querySpoonacularByIngredients = async function (ingredients, maxNumber) {
-
+const queryMealDBByIngredients = async function (ingredients) {
+  const finalList = []
+  for (const ingredient of ingredients) {
+    const result = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?i=' + ingredient)
+    const json = await result.json()
+    if (json.meals !== null) {
+      for (const recipe of json.meals) {
+        const displayRecipe = {}
+        const result = await fetch('https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + recipe.idMeal)
+        const json = await result.json()
+        if (json.meals !== null) {
+          displayRecipe.recipe_name = json.meals[0].strMeal
+          displayRecipe.recipe_link = json.meals[0].strSource
+          finalList.push(displayRecipe)
+        }
+      }
+    }
+  }
+  return finalList
 }
 
 export {
@@ -135,9 +200,10 @@ express()
   .get('/addRecipe', function (req, res) {
     res.render('pages/addRecipe')
   })
-  .get('/getRecipes', async function (req, res) {
-    const results = await getRecipesQuery()
-    res.status(200).json({ recipes: results.result })
+  .get('/getRecipes/:ingredients/:name', async function (req, res) {
+    const ingredients = req.params.ingredients.split(',')
+    const results = await getRecipesQuery(ingredients, req.params.name)
+    res.status(200).json({ recipes: results })
   })
   .post('/newRecipe', async function (req, res) {
     const { name, ingredients, steps } = req.body
@@ -164,5 +230,12 @@ express()
       }
       res.status(200).json({ recipeResult })
     }
+  })
+  .post('/newContactRequest', function (req, res) {
+    const { firstName, lastName, email, subject, message } = req.body
+    const sql = 'INSERT INTO contact_message (first_name, last_name, email, subject, message) VALUES ($1, $2, $3, $4, $5);'
+    const params = [firstName, lastName, email, subject, message]
+    const result = query(sql, params)
+    res.status(200).json({ result })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
